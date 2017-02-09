@@ -195,11 +195,14 @@ open class SideMenuManager : NSObject {
             }
         }
         didSet {
+             /*
+             // Removed to allow navigation controller to be re-used
             guard oldValue?.presentingViewController == nil else {
                 print("SideMenu Warning: menuLeftNavigationController cannot be modified while it's presented.")
                 menuLeftNavigationController = oldValue
                 return
             }
+             */
             setupNavigationController(menuLeftNavigationController, leftSide: true)
         }
     }
@@ -212,11 +215,13 @@ open class SideMenuManager : NSObject {
             }
         }
         didSet {
+             /* Removed to allow navigation controller to be re-used
             guard oldValue?.presentingViewController == nil else {
                 print("SideMenu Warning: menuRightNavigationController cannot be modified while it's presented.")
                 menuRightNavigationController = oldValue
                 return
             }
+             */
             setupNavigationController(menuRightNavigationController, leftSide: false)
         }
     }
