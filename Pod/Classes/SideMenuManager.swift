@@ -128,11 +128,12 @@ public class SideMenuManager : NSObject {
             }
         }
         didSet {
+            /*
             guard oldValue?.presentingViewController == nil else {
                 print("SideMenu Warning: menuLeftNavigationController cannot be modified while it's presented.")
                 menuLeftNavigationController = oldValue
                 return
-            }
+            }*/
             setupNavigationController(menuLeftNavigationController, leftSide: true)
         }
     }
@@ -145,11 +146,13 @@ public class SideMenuManager : NSObject {
             }
         }
         didSet {
+            /*
             guard oldValue?.presentingViewController == nil else {
                 print("SideMenu Warning: menuRightNavigationController cannot be modified while it's presented.")
                 menuRightNavigationController = oldValue
                 return
             }
+            */
             setupNavigationController(menuRightNavigationController, leftSide: false)
         }
     }
