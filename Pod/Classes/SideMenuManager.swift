@@ -6,15 +6,15 @@
 //
 
 /* Example usage:
-    // Define the menus
-    SideMenuManager.menuLeftNavigationController = storyboard!.instantiateViewControllerWithIdentifier("LeftMenuNavigationController") as? UISideMenuNavigationController
-    SideMenuManager.menuRightNavigationController = storyboard!.instantiateViewControllerWithIdentifier("RightMenuNavigationController") as? UISideMenuNavigationController
-
-    // Enable gestures. The left and/or right menus must be set up above for these to work.
-    // Note that these continue to work on the Navigation Controller independent of the View Controller it displays!
-    SideMenuManager.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
-    SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
-*/
+ // Define the menus
+ SideMenuManager.menuLeftNavigationController = storyboard!.instantiateViewControllerWithIdentifier("LeftMenuNavigationController") as? UISideMenuNavigationController
+ SideMenuManager.menuRightNavigationController = storyboard!.instantiateViewControllerWithIdentifier("RightMenuNavigationController") as? UISideMenuNavigationController
+ 
+ // Enable gestures. The left and/or right menus must be set up above for these to work.
+ // Note that these continue to work on the Navigation Controller independent of the View Controller it displays!
+ SideMenuManager.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
+ SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
+ */
 
 public class SideMenuManager : NSObject {
     
@@ -30,7 +30,7 @@ public class SideMenuManager : NSObject {
         let appWindowRect = UIApplication.sharedApplication().keyWindow?.bounds ?? UIWindow().bounds
         return appWindowRect
     }
-
+    
     /**
      The presentation mode of the menu.
      
@@ -40,7 +40,7 @@ public class SideMenuManager : NSObject {
      - ViewSlideInOut: The existing view slides out while the menu slides in.
      - MenuDissolveIn: The menu dissolves in over the existing view controller.
      */
-    public static var menuPresentMode: MenuPresentMode = .ViewSlideOut
+    public static var menuPresentMode: MenuPresentMode = .ViewSlideInOut
     
     /// Prevents the same view controller (or a view controller of the same class) from being pushed more than once. Defaults to true.
     public static var menuAllowPushOfSameClassTwice = true
@@ -49,7 +49,7 @@ public class SideMenuManager : NSObject {
     public static var menuAllowPopIfPossible = false
     
     /// Width of the menu when presented on screen, showing the existing view controller in the remaining space. Default is 75% of the screen width.
-    public static var menuWidth: CGFloat = max(round(min((appScreenRect.width), (appScreenRect.height)) * 0.75), 240)
+    public static var menuWidth: CGFloat = max((appScreenRect.width), (appScreenRect.height)) * 0.07
     
     /// Duration of the animation when the menu is presented without gestures. Default is 0.35 seconds.
     public static var menuAnimationPresentDuration = 0.35
@@ -129,11 +129,11 @@ public class SideMenuManager : NSObject {
         }
         didSet {
             /*
-            guard oldValue?.presentingViewController == nil else {
-                print("SideMenu Warning: menuLeftNavigationController cannot be modified while it's presented.")
-                menuLeftNavigationController = oldValue
-                return
-            }*/
+             guard oldValue?.presentingViewController == nil else {
+             print("SideMenu Warning: menuLeftNavigationController cannot be modified while it's presented.")
+             menuLeftNavigationController = oldValue
+             return
+             }*/
             setupNavigationController(menuLeftNavigationController, leftSide: true)
         }
     }
@@ -147,12 +147,12 @@ public class SideMenuManager : NSObject {
         }
         didSet {
             /*
-            guard oldValue?.presentingViewController == nil else {
-                print("SideMenu Warning: menuRightNavigationController cannot be modified while it's presented.")
-                menuRightNavigationController = oldValue
-                return
-            }
-            */
+             guard oldValue?.presentingViewController == nil else {
+             print("SideMenu Warning: menuRightNavigationController cannot be modified while it's presented.")
+             menuRightNavigationController = oldValue
+             return
+             }
+             */
             setupNavigationController(menuRightNavigationController, leftSide: false)
         }
     }
@@ -194,7 +194,7 @@ public class SideMenuManager : NSObject {
             menuBlurEffectStyle = menuBlurEffectStyle,
             view = forMenu.visibleViewController?.view
             where !UIAccessibilityIsReduceTransparencyEnabled() else {
-            return
+                return
         }
         
         if forMenu.originalMenuBackgroundColor == nil {
@@ -219,7 +219,7 @@ public class SideMenuManager : NSObject {
         guard let forMenu = forMenu,
             originalMenuBackgroundColor = forMenu.originalMenuBackgroundColor,
             view = forMenu.visibleViewController?.view else {
-            return
+                return
         }
         
         view.backgroundColor = originalMenuBackgroundColor
@@ -239,7 +239,7 @@ public class SideMenuManager : NSObject {
      
      - Parameter toView: The view to add gestures to.
      - Parameter forMenu: The menu (left or right) you want to add a gesture for. If unspecified, gestures will be added for both sides.
- 
+     
      - Returns: The array of screen edge gestures added to `toView`.
      */
     public class func menuAddScreenEdgePanGesturesToPresent(toView toView: UIView, forMenu:UIRectEdge? = nil) -> [UIScreenEdgePanGestureRecognizer] {
